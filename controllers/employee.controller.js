@@ -4,9 +4,17 @@ let addEmployee=async (req,res,next)=>
 {
     try
     {
-        let {}=req.body;
-        let employee=await Employee.create(req.body);
-        res.json({error:false,message:"Employee Added Successfully",data:employee});
+        let {name,email,role,password}=req.body;
+
+        let isEmployee=await Employee.findOne({email})
+
+        if(isEmployee)
+        {
+            return res.json({error:true,message:"Employee is Already Exist with given  Email",data:null});
+        }
+
+        let employee=await Employee.create({name,email,role,password});
+        return res.json({error:false,message:"Employee Added Successfully",data:employee});
     }
     catch(err)
     {
@@ -32,9 +40,9 @@ let getEmployees=async (req,res,next)=>
             try
             {
                 let {eid}=req.params; //! eid must be _id 
-                let isEmployee=await Employee.findById(eid);
+                let employee=await Employee.findById(eid);
 
-                if(isEmployee)
+                if(employee)
                 {
                     return res.json({error:false,message:"Employee Fetched Successfully",data:employee});
                 }
@@ -50,12 +58,13 @@ let getEmployees=async (req,res,next)=>
             {
                 try
                 {
+                    
                     let {eid}=req.params; //! eid must be _id 
                     let isEmployee=await Employee.findById(eid);
     
                     if(isEmployee)
                     {
-                        let employee=await Employee.findByIdAndUpdate(eid, {fn:''}, {runValidators:true,new:true})
+                        let employee=await Employee.findByIdAndUpdate(eid, req.body, {runValidators:true,new:true})
                         return res.json({error:false,message:"Employee Updated Successfully",data:employee});
                     }
                     return res.json({error:true,message:"Np Employee Found With Given Id",data:null});
@@ -78,7 +87,7 @@ let getEmployees=async (req,res,next)=>
                             let employee=await Employee.findByIdAndDelete(eid)
                             return res.json({error:false,message:"Employee Deleted Successfully",data:employee});
                         }
-                        return res.json({error:true,message:"Np Employee Found With Given Id",data:null});
+                        return res.json({error:true,message:"No Employee Found With Given Id",data:null});
                     }
                     catch(err)
                     {

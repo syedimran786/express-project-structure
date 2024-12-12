@@ -9,7 +9,7 @@ const EmployeeRoutes = require('./routes//employee.routes');
 let app=express();
 
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({extended:true}))
 app.use(cors())
 
 
@@ -33,7 +33,7 @@ let startServer=async ()=>
 {
     try
     {
-        await connectDB(process.env.DEV_URL);
+        await connectDB(process.env.MONGO_DEV_URL);
         console.log("MongoDB coneected Successfully")
         app.listen(process.env.PORT, ()=>
         {

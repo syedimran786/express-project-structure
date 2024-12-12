@@ -1,16 +1,30 @@
 const {Schema,model} = require('mongoose');
 
-let ImageSchema=new Schema({
+let EmployeeSchema=new Schema({
     name:
     {
         type:String,
         required:true
     },
-    image:
+    email:
     {
         type:String,
         required:true
+    },
+    password:
+    {
+        type:String,
+        required:true
+    },
+    role:
+    {
+        type:String,
+        required:true,
+        enum:["hr administrator","hr manager","hr generalist","recruiter",
+            "hiring manager","talent acquisition","employee","manager","team lead",
+            "admin"
+        ]
     }
 })
 
-module.exports=model("image",ImageSchema)
+module.exports=model("employees",EmployeeSchema)
