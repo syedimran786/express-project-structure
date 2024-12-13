@@ -8,7 +8,7 @@ let authorization=async (req,res,next)=>
           console.log("object")
         let token=req.headers.authorization;//!false
 
-        if(!token || !token.startsWith("Barier") )
+        if(!token || !token.startsWith("Bearer") )
         {
             throw new Error("Token Required");
         }

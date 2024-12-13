@@ -16,6 +16,11 @@ let EmployeeSchema=new Schema({
         type:String,
         required:true
     },
+    age:
+    {
+        type:Number,
+        required:true
+    },
     role:
     {
         type:String,
@@ -25,6 +30,8 @@ let EmployeeSchema=new Schema({
             "admin"
         ]
     }
+},{
+    timestamps:true
 })
 
 module.exports=model("employees",EmployeeSchema)

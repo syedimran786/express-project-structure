@@ -4,7 +4,7 @@ let addEmployee=async (req,res,next)=>
 {
     try
     {
-        let {name,email,role,password}=req.body;
+        let {name,email,role,password,age}=req.body;
 
         let isEmployee=await Employee.findOne({email})
 
@@ -13,7 +13,7 @@ let addEmployee=async (req,res,next)=>
             return res.json({error:true,message:"Employee is Already Exist with given  Email",data:null});
         }
 
-        let employee=await Employee.create({name,email,role,password});
+        let employee=await Employee.create({name,email,role,password,age});
         return res.json({error:false,message:"Employee Added Successfully",data:employee});
     }
     catch(err)
